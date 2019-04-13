@@ -82,7 +82,45 @@ class ScreenSaver():
     可以被启动
     '''
     # 如何装随机产生的球
+    ball = list()
 
+    def __init__(self):
+        # 每次启动球的数量随机
+        self.num_balls = random.randint(6, 20)
+
+        self.root = tkinter.Tk()
+        # 取消边框
+        self.root.overrideredirect(1)
+
+        # 任何鼠标移动都需要取消
+        self.root.bind('<Motion>', self.myquit)
+        # 同理，按动任何键盘都需要退出屏保
+        self.root.bind('<Key>', self.myquit)
+
+        # 得到屏幕大小规格
+        w, h = self.root.winfo_sreenwidth(), self.root.winfo_sreenheight()
+        self.canvas = tkinter.Canvas(self.root, width=w, height=h)
+        self.canvas.pack()
+
+        # 在画布上画球
+        for i in range(self.num_balls):
+            ball = RandomBall(self.canvas, scrnwidth=w, scrnheight=h)
+            ball.creat_ball()
+            self.balls.append(ball)
+
+        self.run_screen_saver()
+        self.root.mainloop()
+
+    def run_screen_saver(self):
+        for ball in self.balls:
+            ball.move_ball()
+
+        # after是200毫秒后启动一个函数，需要启动的函数是第二个参数
+        self.canvas.after(200, self.run_screen_saver())
+
+    def myquit(self, e):
+        # 此处只是利用了事件处理机制
+        # 实际上并不关心事件的类型
+        self.root.destory()
 if __name__ == '__main__':
     ss = ScreenSaver()
-    ss.start()
