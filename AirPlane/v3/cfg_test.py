@@ -3,7 +3,7 @@ import configparser
 # 第一步生成
 cfg = configparser.ConfigParser()
 
-cfg.read("cfg_test.py")
+cfg.read("test_cfg.cfg")
 
 sp_name = cfg.get("SmallPlane", "name")
 print(sp_name)

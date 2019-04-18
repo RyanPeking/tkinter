@@ -74,6 +74,10 @@ class RandomBall(object):
         if self.ypos + self.radius >= self.scrnheight:
             # 撞到了右边墙
             self.yvelocity = -self.yvelocity
+        if self.xpos - self.radius <= 0:
+            self.xvelocity *= -1
+        if self.ypos - self.radius <= 0:
+            self.yvelocity *= -1
         # 在画布上挪动图画
         self.canvas.move(self.item, self.xvelocity, self.yvelocity)
 
@@ -122,7 +126,8 @@ class ScreenSaver(object):
 
     def myquit(self, e):
         # 此处只是利用了事件处理机制
-        # 实际上并不关心事件的类型
-        self.root.destory()
+        # 实际上并不关心事件的类
+        # print(e)
+        self.root.destroy()
 if __name__ == '__main__':
     ScreenSaver()
